@@ -2,17 +2,16 @@
 const {spawn} = require('child_process');
 const path = require('path');
 const {format} = require('util');
-const importLazy = require('import-lazy')(require);
 
-const configstore = importLazy('configstore');
-const chalk = importLazy('chalk');
-const semverDiff = importLazy('semver-diff');
-const latestVersion = importLazy('latest-version');
-const isNpm = importLazy('is-npm');
-const isInstalledGlobally = importLazy('is-installed-globally');
-const boxen = importLazy('boxen');
-const xdgBasedir = importLazy('xdg-basedir');
-const isCi = importLazy('is-ci');
+const configstore = require('configstore');
+const chalk = require('chalk');
+const semverDiff = require('semver-diff');
+const latestVersion = require('latest-version');
+const isNpm = require('is-npm');
+const isInstalledGlobally = require('is-installed-globally');
+const boxen = require('boxen');
+const xdgBasedir = require('xdg-basedir');
+const isCi = require('is-ci');
 
 const ONE_DAY = 1000 * 60 * 60 * 24;
 

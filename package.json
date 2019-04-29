@@ -1,6 +1,6 @@
 {
-	"name": "update-notifier",
-	"version": "2.5.0",
+	"name": "@gatsbyjs/update-notifier",
+	"version": "2.5.0-rc.0",
 	"description": "Update notifications for your CLI app",
 	"license": "BSD-2-Clause",
 	"repository": "yeoman/update-notifier",
@@ -36,7 +36,6 @@
 		"boxen": "^3.0.0",
 		"chalk": "^2.0.1",
 		"configstore": "^4.0.0",
-		"import-lazy": "^2.1.0",
 		"is-ci": "^2.0.0",
 		"is-installed-globally": "^0.1.0",
 		"is-npm": "^3.0.0",
@@ -51,5 +50,8 @@
 		"mock-require": "^3.0.3",
 		"strip-ansi": "^5.2.0",
 		"xo": "^0.24.0"
+	},
+	"publishConfig": {
+		"access": "public"
 	}
 }
