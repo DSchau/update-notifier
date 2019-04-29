@@ -1,6 +1,6 @@
 {
 	"name": "@gatsbyjs/update-notifier",
-	"version": "2.5.0-rc.2",
+	"version": "2.5.0",
 	"description": "Update notifications for your CLI app",
 	"license": "BSD-2-Clause",
 	"repository": "dschau/update-notifier",
