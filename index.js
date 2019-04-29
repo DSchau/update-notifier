@@ -3,7 +3,7 @@ const {spawn} = require('child_process');
 const path = require('path');
 const {format} = require('util');
 
-const configstore = require('configstore');
+const ConfigStore = require('configstore');
 const chalk = require('chalk');
 const semverDiff = require('semver-diff');
 const latestVersion = require('latest-version');
@@ -39,12 +39,11 @@ class UpdateNotifier {
 		this.callback = options.callback || (() => {});
 		this.disabled = 'NO_UPDATE_NOTIFIER' in process.env ||
 			process.argv.includes('--no-update-notifier') ||
-			isCi();
+			isCi;
 		this.shouldNotifyInNpmScript = options.shouldNotifyInNpmScript;
 
 		if (!this.disabled && !this.hasCallback) {
 			try {
-				const ConfigStore = configstore();
 				this.config = new ConfigStore(`update-notifier-${this.packageName}`, {
 					optOut: false,
 					// Init with the current time so the first check is only
@@ -54,13 +53,13 @@ class UpdateNotifier {
 			} catch (error) {
 				// Expecting error code EACCES or EPERM
 				const message =
-					chalk().yellow(format(' %s update check failed ', options.pkg.name)) +
-					format('\n Try running with %s or get access ', chalk().cyan('sudo')) +
+					chalk.yellow(format(' %s update check failed ', options.pkg.name)) +
+					format('\n Try running with %s or get access ', chalk.cyan('sudo')) +
 					'\n to the local update config store via \n' +
-					chalk().cyan(format(' sudo chown -R $USER:$(id -gn $USER) %s ', xdgBasedir().config));
+					chalk.cyan(format(' sudo chown -R $USER:$(id -gn $USER) %s ', xdgBasedir.config));
 
 				process.on('exit', () => {
-					console.error('\n' + boxen()(message, {align: 'center'}));
+					console.error('\n' + boxen(message, {align: 'center'}));
 				});
 			}
 		}
@@ -107,29 +106,29 @@ class UpdateNotifier {
 
 	async checkNpm() {
 		const {distTag} = this.options;
-		const latest = await latestVersion()(this.packageName, {version: distTag});
+		const latest = await latestVersion(this.packageName, {version: distTag});
 
 		return {
 			latest,
 			current: this.packageVersion,
-			type: semverDiff()(this.packageVersion, latest) || distTag,
+			type: semverDiff(this.packageVersion, latest) || distTag,
 			name: this.packageName
 		};
 	}
 
 	notify(options) {
-		const suppressForNpm = !this.shouldNotifyInNpmScript && isNpm().isNpm;
+		const suppressForNpm = !this.shouldNotifyInNpmScript && isNpm;
 		if (!process.stdout.isTTY || suppressForNpm || !this.update) {
 			return this;
 		}
 
 		options = {
-			isGlobal: isInstalledGlobally(),
+			isGlobal: isInstalledGlobally,
 			...options
 		};
 
-		options.message = options.message || 'Update available ' + chalk().dim(this.update.current) + chalk().reset(' → ') +
-			chalk().green(this.update.latest) + ' \nRun ' + chalk().cyan('npm i ' + (options.isGlobal ? '-g ' : '') + this.packageName) + ' to update';
+		options.message = options.message || 'Update available ' + chalk.dim(this.update.current) + chalk.reset(' → ') +
+			chalk.green(this.update.latest) + ' \nRun ' + chalk.cyan('npm i ' + (options.isGlobal ? '-g ' : '') + this.packageName) + ' to update';
 
 		options.boxenOpts = options.boxenOpts || {
 			padding: 1,
